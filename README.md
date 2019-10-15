@@ -98,7 +98,6 @@ Pro/Cons
 - Supports multiple language/country configurations (ex: `en-GB` and `en-US`)
 - Use Google Sheet document
 - Supports plurality
-- Support 
 
 **Cons:** 
 - You need to run a command line each time you add/remove a new key in the google sheet
