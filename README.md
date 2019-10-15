@@ -13,15 +13,9 @@ Configure `@SheetLocalization`
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
 ```
 
-Run this commands: 
+Run this command: 
 ```sh
 > flutter packages pub run build_runner build
-```
-
-You can use my custom `build-localization.sh` too:
-```sh
-// Don't forget to chmod
-> ./build-localization.sh
 ```
 
 • **files and folders**
