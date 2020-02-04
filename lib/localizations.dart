@@ -4,14 +4,17 @@ import 'package:flutter_sheet_localization/flutter_sheet_localization.dart';
 
 part 'localizations.g.dart';
 
-@SheetLocalization("1AcjI1BjmQpjlnPUZ7aVLbrnVR98xtATnSjU4CExM9fs", "0")
+/// https://docs.google.com/spreadsheets/d/1u8pjc6XOb_kDSAVp9_kbEUuOppYE3Utl8WqK8p0OlkI/edit?usp=sharing
+@SheetLocalization("1u8pjc6XOb_kDSAVp9_kbEUuOppYE3Utl8WqK8p0OlkI", "0")
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const AppLocalizationsDelegate();
 
   @override
-  bool isSupported(Locale locale) => AppLocalizations.languages.containsKey(locale);
+  bool isSupported(Locale locale) =>
+      AppLocalizations.languages.containsKey(locale);
   @override
-  Future<AppLocalizations> load(Locale locale) => SynchronousFuture<AppLocalizations>(AppLocalizations(locale));
+  Future<AppLocalizations> load(Locale locale) =>
+      SynchronousFuture<AppLocalizations>(AppLocalizations(locale));
   @override
   bool shouldReload(AppLocalizationsDelegate old) => false;
 }

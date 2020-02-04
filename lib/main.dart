@@ -5,12 +5,27 @@ import 'localizations.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int _localeIndex;
+  Locale _currentLocale;
+
+  @override
+  void initState() {
+    _localeIndex = 0;
+    _currentLocale = AppLocalizations.languages.keys.first;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      locale: AppLocalizations.languages.keys.first,
+      locale: _currentLocale,
       localizationsDelegates: [
         const AppLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
@@ -20,46 +35,62 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(
+        title: 'Flutter Demo Home Page',
+        localeIndex: _localeIndex,
+        onLocaleChanged: (localeIndex) {
+          this.setState(
+            () {
+              if (_localeIndex >= AppLocalizations.languages.keys.length - 1) {
+                _localeIndex = 0;
+              } else {
+                _localeIndex = localeIndex;
+              }
+              this._currentLocale =
+                  AppLocalizations.languages.keys.elementAt(_localeIndex);
+            },
+          );
+        },
+      ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class MyHomePage extends StatelessWidget {
+  MyHomePage({
+    Key key,
+    this.title,
+    this.localeIndex,
+    @required this.onLocaleChanged,
+  }) : super(key: key);
 
   final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  // Swap locale at runtime
-  int localIndex = 0;
-  void _switchLanguage() {
-    setState(() {
-      localIndex = localIndex >= AppLocalizations.languages.length - 1 ? 0 : localIndex + 1;
-      // not today
-    });
-  }
+  final int localeIndex;
+  final ValueChanged<int> onLocaleChanged;
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations_Labels localizations = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(AppLocalizations.of(context).dates.month.april),
+            Text(localizations.title),
+            Text(localizations.hello(name: 'Dash')),
+            Text(localizations.contact.email),
+            Text(localizations.contact.phone),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _switchLanguage,
+        onPressed: () {
+          onLocaleChanged(localeIndex + 1);
+        },
         child: Icon(Icons.swap_horiz),
       ),
     );
